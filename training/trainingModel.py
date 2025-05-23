@@ -18,14 +18,11 @@ TEST_SPLIT = 0.15
 SEED = 42
 MODEL_PATH = "cat_model.pth"
 
-# Set random seed for reproducibility
+
 torch.manual_seed(SEED)
 np.random.seed(SEED)
 
-# Device configuration
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Pretrained weights and transforms
 weights = ResNet18_Weights.DEFAULT
 
 # Data transforms
@@ -45,17 +42,14 @@ test_transform = transforms.Compose([
     weights.transforms()
 ])
 
-# Load dataset
 dataset = datasets.ImageFolder('Images/', transform=train_transform)
 class_names = dataset.classes
 n_classes = len(class_names)
 targets = [label for _, label in dataset]
 
-# Class weights
 class_weights = compute_class_weight('balanced', classes=np.arange(n_classes), y=targets)
 class_weights = torch.tensor(class_weights, dtype=torch.float).to(device)
 
-# Stratified split
 indices = list(range(len(dataset)))
 train_idx, temp_idx, _, temp_labels = train_test_split(
     indices, targets, test_size=VAL_SPLIT + TEST_SPLIT, stratify=targets, random_state=SEED)
@@ -63,7 +57,6 @@ train_idx, temp_idx, _, temp_labels = train_test_split(
 val_size = int(TEST_SPLIT / (VAL_SPLIT + TEST_SPLIT) * len(temp_idx))
 val_idx, test_idx = temp_idx[val_size:], temp_idx[:val_size]
 
-# Subsets with appropriate transforms
 train_dataset = Subset(dataset, train_idx)
 val_dataset = Subset(datasets.ImageFolder('Images/', transform=test_transform), val_idx)
 test_dataset = Subset(datasets.ImageFolder('Images/', transform=test_transform), test_idx)
@@ -135,7 +128,6 @@ def train_model():
                 print("Early stopping.")
                 break
 
-# Run training and evaluate on test set
 if __name__ == "__main__":
     train_model()
     model.load_state_dict(torch.load(MODEL_PATH))

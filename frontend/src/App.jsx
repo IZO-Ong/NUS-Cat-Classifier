@@ -7,7 +7,7 @@ function App() {
   return (
     <Router>
       <div className="custom-layout">
-        <div className="top-buttons">
+        <div className="top-nav">
           <Link to="/" className="nav-button">Home</Link>
           <Link to="/cats" className="nav-button">Cats</Link>
         </div>
