@@ -66,7 +66,7 @@ export default function Cats() {
   return (
     <div className="main-box text-center shadow-sm">
       {lastPredictedCat && lastPredictedCat.name.toLowerCase() !== 'not a cat' && (
-        <div>
+        <div className="recent-wrapper fade-in" style={{ animationDelay: '0ms' }}>
           <h2 className="heading">Recently Predicted</h2>
           <Link to={`/cats/${lastPredictedCat.slug}`} className="recent-predicted">
             <img
@@ -78,13 +78,23 @@ export default function Cats() {
         </div>
       )}
 
-      {displayOrder.map(loc => (
-        grouped[loc] && (
-          <div key={loc} className="location-group">
+      {displayOrder.map(loc => {
+        const group = grouped[loc]
+        if (!group) return null
+
+        const classNameSafe = loc.toLowerCase().replace(/[^a-z0-9]/g, '-')
+
+        return (
+          <div key={loc} className={`location-group themed-group themed-${classNameSafe}`}>
             <h3>{loc}</h3>
             <div className="cat-grid">
-              {grouped[loc].map(cat => (
-                <Link key={cat.slug} to={`/cats/${cat.slug}`} className="cat-card">
+              {group.map((cat, index) => (
+                <Link
+                  key={cat.slug}
+                  to={`/cats/${cat.slug}`}
+                  className="cat-card fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
                   <img src={`http://localhost:5000${cat.image}`} alt={cat.slug} />
                   <div className="overlay">{cat.name}</div>
                 </Link>
@@ -92,7 +102,7 @@ export default function Cats() {
             </div>
           </div>
         )
-      ))}
+      })}
     </div>
   )
 }

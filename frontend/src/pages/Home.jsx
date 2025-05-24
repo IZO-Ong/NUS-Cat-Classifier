@@ -56,6 +56,7 @@ export default function Home() {
                 prediction={prediction}
                 onPredict={handlePredict}
                 disabled={!pendingFile}
+                slug={lastPredictedCat?.slug}
               />
             </>
           )}

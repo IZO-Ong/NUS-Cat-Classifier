@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 
-export default function PredictSection({ loading, prediction, onPredict, disabled }) {
+export default function PredictSection({ loading, prediction, onPredict, disabled, slug }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -14,6 +15,8 @@ export default function PredictSection({ loading, prediction, onPredict, disable
       setVisible(false)
     }
   }, [prediction])
+
+  const isValidCat = prediction && prediction.toLowerCase() !== 'not a cat'
 
   return (
     <div
@@ -43,14 +46,17 @@ export default function PredictSection({ loading, prediction, onPredict, disable
             transition: 'opacity 0.5s ease'
           }}
         >
-          Prediction: {prediction}
+          Prediction:{' '}
+          {isValidCat ? (
+            <Link to={`/cats/${slug}`} style={{ color: '#0d6efd', textDecoration: 'underline' }}>
+              {prediction}
+            </Link>
+          ) : (
+            prediction
+          )}
         </h2>
       ) : (
-        <Button
-          variant="primary"
-          onClick={onPredict}
-          disabled={disabled}
-        >
+        <Button variant="primary" onClick={onPredict} disabled={disabled}>
           Predict
         </Button>
       )}
