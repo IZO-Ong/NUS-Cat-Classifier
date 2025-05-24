@@ -172,3 +172,9 @@ button.btn-primary {
 button.btn-primary:hover {
   background-color: #1e40af;
 }
+
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+

@@ -3,18 +3,18 @@ import { createContext, useContext, useState, useEffect } from 'react'
 const CatContext = createContext()
 
 export function CatProvider({ children }) {
-  const [imagePreview, setImagePreview] = useState(() => localStorage.getItem('imagePreview'))
-  const [prediction, setPrediction] = useState(() => localStorage.getItem('prediction'))
+  const [imagePreview, setImagePreview] = useState(() => sessionStorage.getItem('imagePreview'))
+  const [prediction, setPrediction] = useState(() => sessionStorage.getItem('prediction'))
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (imagePreview) localStorage.setItem('imagePreview', imagePreview)
-    else localStorage.removeItem('imagePreview')
+    if (imagePreview) sessionStorage.setItem('imagePreview', imagePreview)
+    else sessionStorage.removeItem('imagePreview')
   }, [imagePreview])
 
   useEffect(() => {
-    if (prediction) localStorage.setItem('prediction', prediction)
-    else localStorage.removeItem('prediction')
+    if (prediction) sessionStorage.setItem('prediction', prediction)
+    else sessionStorage.removeItem('prediction')
   }, [prediction])
 
   return (

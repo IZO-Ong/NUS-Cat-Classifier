@@ -1,7 +1,7 @@
 import { useCat } from '../context/CatContext'
 import UploadForm from '../components/UploadForm'
 import Preview from '../components/Preview'
-import Prediction from '../components/Prediction'
+import PredictSection from '../components/PredictSection'
 import Card from 'react-bootstrap/Card'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
@@ -39,6 +39,7 @@ export default function Home() {
           <h1 className="heading">
             Cat Classifier <span className="emoji">🐱</span>
           </h1>
+
           <UploadForm
             imagePreview={imagePreview}
             setImagePreview={setImagePreview}
@@ -46,23 +47,18 @@ export default function Home() {
             setLoading={setLoading}
             setPendingFile={setPendingFile}
           />
+
           {imagePreview && (
             <>
               <Preview imagePreview={imagePreview} />
-              {loading && <Spinner animation="border" role="status" className="mt-3" />}
-              {!prediction && !loading && (
-                <Button
-                  variant="primary"
-                  className="mt-3"
-                  onClick={handlePredict}
-                  disabled={!pendingFile}
-                >
-                  Predict
-                </Button>
-              )}
+              <PredictSection
+                loading={loading}
+                prediction={prediction}
+                onPredict={handlePredict}
+                disabled={!pendingFile}
+              />
             </>
           )}
-          <Prediction prediction={prediction} />
         </div>
       </Card.Body>
     </Card>
