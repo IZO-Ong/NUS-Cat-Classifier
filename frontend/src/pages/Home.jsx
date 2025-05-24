@@ -2,13 +2,11 @@ import { useCat } from '../context/CatContext'
 import UploadForm from '../components/UploadForm'
 import Preview from '../components/Preview'
 import PredictSection from '../components/PredictSection'
-import Card from 'react-bootstrap/Card'
-import Spinner from 'react-bootstrap/Spinner'
-import Button from 'react-bootstrap/Button'
 import { useState } from 'react'
+import '../styles/Home.css'
 
 export default function Home() {
-  const { imagePreview, setImagePreview, prediction, setPrediction, loading, setLoading } = useCat()
+  const { imagePreview, setImagePreview, prediction, setPrediction, loading, setLoading, lastPredictedCat, setLastPredictedCat } = useCat()
   const [pendingFile, setPendingFile] = useState(null)
 
   const handlePredict = async () => {
@@ -25,6 +23,9 @@ export default function Home() {
       })
       const data = await res.json()
       setPrediction(data.prediction)
+      if (data.prediction.toLowerCase() !== 'not a cat') {
+        setLastPredictedCat({ name: data.prediction, slug: data.slug })
+      }
     } catch {
       setPrediction('Error fetching prediction')
     } finally {
@@ -33,12 +34,11 @@ export default function Home() {
   }
 
   return (
-    <Card className="main-box shadow-sm text-center">
-      <Card.Body className="p-0">
-        <div className="card-inner">
-          <h1 className="heading">
-            Cat Classifier <span className="emoji">🐱</span>
-          </h1>
+    <div className="main-box text-center shadow-sm">
+      <div className="card-inner">
+        <h1 className="heading">
+          Cat Classifier <span className="emoji">🐱</span>
+        </h1>
 
           <UploadForm
             imagePreview={imagePreview}
@@ -60,7 +60,6 @@ export default function Home() {
             </>
           )}
         </div>
-      </Card.Body>
-    </Card>
+    </div>
   )
 }

@@ -6,7 +6,7 @@ def load_model(path, class_list):
     model.fc = torch.nn.Linear(model.fc.in_features, len(class_list))
     model.load_state_dict(torch.load(path, map_location='cpu'))
     model.eval()
-    model.class_names = class_list  # Attach for prediction use
+    model.class_names = class_list
     return model
 
 def predict(model, image_tensor):

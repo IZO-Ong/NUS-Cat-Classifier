@@ -6,6 +6,7 @@ export function CatProvider({ children }) {
   const [imagePreview, setImagePreview] = useState(() => sessionStorage.getItem('imagePreview'))
   const [prediction, setPrediction] = useState(() => sessionStorage.getItem('prediction'))
   const [loading, setLoading] = useState(false)
+  const [lastPredictedCat, setLastPredictedCat] = useState(null)
 
   useEffect(() => {
     if (imagePreview) sessionStorage.setItem('imagePreview', imagePreview)
@@ -21,7 +22,8 @@ export function CatProvider({ children }) {
     <CatContext.Provider value={{
       imagePreview, setImagePreview,
       prediction, setPrediction,
-      loading, setLoading
+      loading, setLoading,
+      lastPredictedCat, setLastPredictedCat
     }}>
       {children}
     </CatContext.Provider>

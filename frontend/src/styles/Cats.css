@@ -1,0 +1,82 @@
+.cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.cat-card, .recent-predicted {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cat-card img, .recent-predicted img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  transition: 0.3s ease;
+  border-radius: 0.75rem;
+}
+
+.cat-card:hover img, .recent-predicted:hover img {
+  filter: brightness(0.6);
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.cat-card:hover .overlay,
+.recent-predicted:hover .overlay {
+  opacity: 1;
+}
+
+.location-group {
+  margin: 2rem 0;
+}
+
+.status-wrapper {
+  background: #fff;
+  border-radius: 1.5rem;
+  max-width: 520px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.status-message {
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.status-message.loading {
+  color: #1e40af;
+  background: #e0ecff;
+  border: 1px solid #93c5fd;
+}
+
+.status-message.error {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+}
+
+
+
