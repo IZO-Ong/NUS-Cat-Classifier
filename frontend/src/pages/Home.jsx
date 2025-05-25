@@ -23,7 +23,7 @@ export default function Home() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setFadeReady(true)
-    }, 10) // Slight delay ensures animation applies cleanly
+    }, 10)
     return () => clearTimeout(timeout)
   }, [])
 

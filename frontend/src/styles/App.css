@@ -59,6 +59,16 @@ html, body, #root {
   opacity: 0.75;
 }
 
+.logout-button {
+  background-color: #e11d48;
+  border-radius: 999px;
+  color: white;
+}
+
+.logout-button:hover {
+  opacity: 0.85;
+}
+
 .status-wrapper {
   max-width: 520px;
   margin: 2rem auto;
@@ -103,3 +113,5 @@ html, body, #root {
     font-size: 0.95rem;
   }
 }
+
+
