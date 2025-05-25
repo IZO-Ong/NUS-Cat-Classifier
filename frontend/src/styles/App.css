@@ -1,3 +1,4 @@
+
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -15,6 +16,14 @@ html, body, #root {
   padding: 0 1rem 2rem 1rem;
   min-height: 100vh;
 }
+
+.main-content {
+  padding-top: 3rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
 
 .top-nav {
   background-color: #111;
@@ -41,6 +50,56 @@ html, body, #root {
   transition: opacity 0.3s ease;
 }
 
+.nav-button.active {
+  border-bottom: 2px solid white;
+  font-weight: 600;
+}
+
 .nav-button:hover {
   opacity: 0.75;
+}
+
+.status-wrapper {
+  max-width: 520px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.status-message {
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+}
+
+.status-message.loading {
+  color: #1e40af;
+  background: #e0ecff;
+  border: 1px solid #93c5fd;
+}
+
+.status-message.error {
+  color: #b91c1c;
+  background: #fee2e2;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1rem;
+  }
+
+  .cat-card, .recent-predicted {
+    width: 180px;
+    height: 180px;
+  }
+
+  .nav-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
 }

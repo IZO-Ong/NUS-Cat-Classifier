@@ -1,0 +1,25 @@
+.predict-section {
+  min-height: 4rem;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.predict-text {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: opacity 0.5s ease;
+  opacity: 0; /* default; overridden by class toggle */
+}
+
+.predict-text.visible {
+  opacity: 1;
+}
+
+.predict-link {
+  color: #0d6efd;
+  text-decoration: underline;
+}

@@ -5,7 +5,7 @@
   gap: 1rem;
 }
 
-.cat-card {
+.cat-card, .recent-predicted {
   display: flex;
   position: relative;
   width: 180px;
@@ -15,7 +15,6 @@
   background: none;
   border: 2px solid white;
 }
-
 
 .cat-card img, .recent-predicted img {
   display: block;
@@ -34,19 +33,6 @@
   justify-content: center;
   margin-bottom: 2rem;
 }
-
-.recent-predicted {
-  display: flex;
-  position: relative;
-  width: 180px;
-  height: 180px;
-  border-radius: 1rem;
-  overflow: hidden;
-  background: none;
-  border: 2px solid white;
-}
-
-
 
 .cat-card:hover img,
 .recent-predicted:hover img {
@@ -71,6 +57,27 @@
 .cat-card:hover .overlay,
 .recent-predicted:hover .overlay {
   opacity: 1;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-input {
+  padding: 0.75rem 1rem;
+  width: 280px;
+  border-radius: 2rem;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #888;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
 .location-group {
@@ -154,35 +161,6 @@
   background-image: url('/textures/overlapping-circles.svg');
   background-repeat: repeat;
   background-size: 10%;
-}
-
-.status-wrapper {
-  background: #fff;
-  border-radius: 1.5rem;
-  max-width: 520px;
-  margin: 2rem auto;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
-
-.status-message {
-  font-size: 1.15rem;
-  font-weight: 500;
-  padding: 1rem;
-  border-radius: 1rem;
-}
-
-.status-message.loading {
-  color: #1e40af;
-  background: #e0ecff;
-  border: 1px solid #93c5fd;
-}
-
-.status-message.error {
-  color: #b91c1c;
-  background: #fee2e2;
-  border: 1px solid #fca5a5;
 }
 
 @keyframes fadeInUp {

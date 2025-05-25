@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 import { useCat } from '../context/CatContext'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SearchBar from '../components/SearchBar'
+import LocationSection from '../components/LocationSection'
+import { groupCatsByLocation } from '../utils/groupCats'
 import '../styles/Cats.css'
 
 export default function Cats() {
   const { lastPredictedCat } = useCat()
+  const [searchQuery, setSearchQuery] = useState('')
 
   const { data: cats = [], isLoading, isError } = useQuery({
     queryKey: ['cats'],
@@ -13,8 +18,26 @@ export default function Cats() {
       if (!res.ok) throw new Error('Failed to fetch cats')
       return res.json()
     },
-    retry: 1
+    retry: 1,
+    staleTime: 1000 * 60 * 10,
   })
+
+  const filteredCats = cats.filter(cat =>
+    cat.name.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
+  const grouped = groupCatsByLocation(filteredCats)
+
+  const displayOrder = [
+    'UTown',
+    'Engineering',
+    'Computing / Biz',
+    'Science',
+    'Arts',
+    'Temasek',
+    'Raffles',
+    'Others'
+  ]
 
   if (isLoading) {
     return (
@@ -36,35 +59,8 @@ export default function Cats() {
     )
   }
 
-  const grouped = cats.reduce((acc, cat) => {
-    const group = (() => {
-      if (cat.location.toLowerCase().includes('utown')) return 'UTown'
-      if (cat.location.toLowerCase().includes('engineering')) return 'Engineering'
-      if (cat.location.toLowerCase().includes('computing') || cat.location.toLowerCase().includes('biz')) return 'Computing / Biz'
-      if (cat.location.toLowerCase().includes('science')) return 'Science'
-      if (cat.location.toLowerCase().includes('arts') || cat.location.toLowerCase().includes('fass')) return 'Arts'
-      if (cat.location.toLowerCase().includes('temasek')) return 'Temasek'
-      if (cat.location.toLowerCase().includes('raffles')) return 'Raffles'
-      return 'Others'
-    })()
-    if (!acc[group]) acc[group] = []
-    acc[group].push(cat)
-    return acc
-  }, {})
-
-  const displayOrder = [
-    'UTown',
-    'Engineering',
-    'Computing / Biz',
-    'Science',
-    'Arts',
-    'Temasek',
-    'Raffles',
-    'Others'
-  ]
-
   return (
-    <div className="main-box text-center shadow-sm">
+    <div className="main-box text-center">
       {lastPredictedCat && lastPredictedCat.name.toLowerCase() !== 'not a cat' && (
         <div className="recent-wrapper fade-in" style={{ animationDelay: '0ms' }}>
           <h2 className="heading">Recently Predicted</h2>
@@ -78,31 +74,21 @@ export default function Cats() {
         </div>
       )}
 
-      {displayOrder.map(loc => {
-        const group = grouped[loc]
-        if (!group) return null
+      <SearchBar query={searchQuery} setQuery={setSearchQuery} />
 
-        const classNameSafe = loc.toLowerCase().replace(/[^a-z0-9]/g, '-')
-
-        return (
-          <div key={loc} className={`location-group themed-group themed-${classNameSafe}`}>
-            <h3>{loc}</h3>
-            <div className="cat-grid">
-              {group.map((cat, index) => (
-                <Link
-                  key={cat.slug}
-                  to={`/cats/${cat.slug}`}
-                  className="cat-card fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <img src={`http://localhost:5000${cat.image}`} alt={cat.slug} />
-                  <div className="overlay">{cat.name}</div>
-                </Link>
-              ))}
-            </div>
+      {filteredCats.length === 0 ? (
+        <div className="status-wrapper">
+          <div className="status-message error">
+            😿 No cats found matching that name.
           </div>
-        )
-      })}
+        </div>
+      ) : (
+        displayOrder.map(loc => {
+          const group = grouped[loc]
+          if (!group) return null
+          return <LocationSection key={loc} loc={loc} group={group} />
+        })
+      )}
     </div>
   )
 }
