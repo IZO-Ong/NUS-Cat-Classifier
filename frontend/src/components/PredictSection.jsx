@@ -4,7 +4,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import '../styles/PredictSection.css'
 
-export default function PredictSection({ loading, prediction, onPredict, disabled, slug }) {
+export default function PredictSection({ loading, prediction, onPredict, disabled, slug, error }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -40,9 +40,18 @@ export default function PredictSection({ loading, prediction, onPredict, disable
           )}
         </h2>
       ) : (
-        <Button variant="primary" onClick={onPredict} disabled={disabled}>
-          Predict
-        </Button>
+        <div className="predict-button-block">
+          <Button variant="primary" onClick={onPredict} disabled={disabled}>
+            Predict
+          </Button>
+          {error && (
+            <div className="status-wrapper">
+              <div className="status-message error">
+                ❌ {error}
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </div>
   )

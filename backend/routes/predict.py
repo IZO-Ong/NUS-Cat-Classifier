@@ -12,7 +12,7 @@ cat_names = ['ashy', 'belle', 'buddy', 'coco', 'flower', 'fred', 'kit',
 
 predict_routes = Blueprint('predict_routes', __name__)
 
-@predict_routes.route('/predict', methods=['POST'])
+@predict_routes.route('/api/predict', methods=['POST'])
 def predict_route():
     if 'image' not in request.files:
         return jsonify({'error': 'No image uploaded'}), 400

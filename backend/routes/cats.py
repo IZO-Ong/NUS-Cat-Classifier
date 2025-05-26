@@ -12,14 +12,13 @@ def get_all_cats():
         cat['_id'] = str(cat['_id'])
     return jsonify(cats)
 
-@cat_routes.route('/cats/<slug>', methods=['GET'])
+@cat_routes.route('/api/cats/<slug>', methods=['GET'])
 def get_cat_by_slug(slug):
     cat = cats_collection.find_one({"slug": slug})
     if not cat:
         return jsonify({'error': 'Cat not found'}), 404
     cat['_id'] = str(cat['_id'])
     return jsonify(cat)
-
 
 @cat_routes.route('/api/cats/<name>/predict', methods=['PATCH'])
 def increment_prediction(name):
@@ -45,7 +44,6 @@ def add_cat():
     if existing:
         return jsonify({"error": "Cat already exists"}), 409
 
-    # Generate slug by removing spaces and lowercasing the name
     data['slug'] = cat_name.lower().replace(' ', '')
 
     cat_doc = create_cat_document(data)

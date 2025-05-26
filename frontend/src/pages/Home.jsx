@@ -19,6 +19,7 @@ export default function Home() {
 
   const [pendingFile, setPendingFile] = useState(null)
   const [fadeReady, setFadeReady] = useState(false)
+  const [error, setError] = useState(null)
 
   const API_BASE = import.meta.env.VITE_API_URL || ''
 
@@ -32,6 +33,8 @@ export default function Home() {
   const handlePredict = async () => {
     if (!pendingFile) return
     setLoading(true)
+    setError(null)
+    setPrediction(null)
 
     const formData = new FormData()
     formData.append('image', pendingFile)
@@ -42,12 +45,19 @@ export default function Home() {
         body: formData
       })
       const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Prediction failed')
+      }
+
       setPrediction(data.prediction)
       if (data.prediction.toLowerCase() !== 'not a cat') {
         setLastPredictedCat({ name: data.prediction, slug: data.slug })
       }
-    } catch {
-      setPrediction('Error fetching prediction')
+    } catch (err) {
+      setPrediction(null)
+      setLastPredictedCat(null)
+      setError(err.message || 'Error fetching prediction')
     } finally {
       setLoading(false)
     }
@@ -70,7 +80,11 @@ export default function Home() {
             setImagePreview={setImagePreview}
             setPrediction={setPrediction}
             setLoading={setLoading}
-            setPendingFile={setPendingFile}
+            setPendingFile={(file) => {
+              setPendingFile(file)
+              setError(null)
+              setPrediction(null)
+            }}
           />
         </div>
 
@@ -79,6 +93,7 @@ export default function Home() {
             <div className="fade-delay-3">
               <Preview imagePreview={imagePreview} />
             </div>
+
             <div className="fade-delay-4">
               <PredictSection
                 loading={loading}
@@ -86,6 +101,7 @@ export default function Home() {
                 onPredict={handlePredict}
                 disabled={!pendingFile}
                 slug={lastPredictedCat?.slug}
+                error={error}
               />
             </div>
           </>
