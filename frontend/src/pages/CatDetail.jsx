@@ -15,6 +15,8 @@ export default function CatDetail() {
   const token = localStorage.getItem('token') || sessionStorage.getItem('token')
   const username = localStorage.getItem('username') || sessionStorage.getItem('username')
 
+  const API_BASE = import.meta.env.VITE_API_URL || ''
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setFadeVisible(true)
@@ -29,7 +31,7 @@ export default function CatDetail() {
   } = useQuery({
     queryKey: ['cat', slug],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/cats/${slug}`)
+      const res = await fetch(`${API_BASE}/api/cats/${slug}`)
       if (!res.ok) throw new Error('Failed to fetch')
       return res.json()
     },
@@ -42,7 +44,7 @@ export default function CatDetail() {
   } = useQuery({
     queryKey: ['comments', slug],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/api/cats/${slug}/comments`)
+      const res = await fetch(`${API_BASE}/api/cats/${slug}/comments`)
       if (!res.ok) throw new Error('Failed to fetch comments')
       return res.json()
     }
@@ -50,7 +52,7 @@ export default function CatDetail() {
 
   const likeComment = useMutation({
     mutationFn: async (commentId) => {
-      await fetch(`http://localhost:5000/api/comments/${commentId}/like`, {
+      await fetch(`${API_BASE}/api/comments/${commentId}/like`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

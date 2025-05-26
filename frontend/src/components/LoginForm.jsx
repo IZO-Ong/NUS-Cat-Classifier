@@ -9,6 +9,8 @@ export default function LoginForm({ setUsername }) {
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
+  const API_BASE = import.meta.env.VITE_API_URL || ''
+
   useEffect(() => {
     const loggedIn = localStorage.getItem('username') || sessionStorage.getItem('username')
     if (loggedIn) navigate('/')
@@ -19,7 +21,7 @@ export default function LoginForm({ setUsername }) {
     setError(null)
 
     try {
-      const res = await fetch('http://localhost:5000/api/login', {
+      const res = await fetch(`${API_BASE}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

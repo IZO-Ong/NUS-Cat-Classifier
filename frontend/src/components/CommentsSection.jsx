@@ -4,10 +4,13 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { useMutation } from '@tanstack/react-query'
 
 export default function CommentsSection({ comments, token, username, sortOption, setSortOption, slug, refetchComments }) {
+
+  const API_BASE = import.meta.env.VITE_API_URL || ''
+
   const toggleLike = useMutation({
     mutationFn: async ({ id, liked }) => {
       const endpoint = liked ? 'unlike' : 'like'
-      await fetch(`http://localhost:5000/api/comments/${id}/${endpoint}`, {
+      await fetch(`${API_BASE}/api/comments/${id}/${endpoint}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +23,7 @@ export default function CommentsSection({ comments, token, username, sortOption,
 
   const deleteComment = useMutation({
     mutationFn: async (id) => {
-      await fetch(`http://localhost:5000/api/comments/${id}`, {
+      await fetch(`${API_BASE}/api/comments/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`

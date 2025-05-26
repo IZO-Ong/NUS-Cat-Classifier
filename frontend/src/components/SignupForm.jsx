@@ -12,6 +12,8 @@ export default function SignupForm() {
   const [available, setAvailable] = useState(null)
   const navigate = useNavigate()
 
+  const API_BASE = import.meta.env.VITE_API_URL || ''
+
   useEffect(() => {
     const loggedIn = localStorage.getItem('username') || sessionStorage.getItem('username')
     if (loggedIn) navigate('/')
@@ -21,7 +23,7 @@ export default function SignupForm() {
     if (!username) return
     setChecking(true)
     const timeout = setTimeout(async () => {
-      const res = await fetch('http://localhost:5000/api/users')
+      const res = await fetch(`${API_BASE}/api/users`)
       const users = await res.json()
       const taken = users.some(user => user.username === username)
       setAvailable(!taken)
@@ -47,7 +49,7 @@ export default function SignupForm() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/register', {
+      const res = await fetch(`${API_BASE}/api/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })

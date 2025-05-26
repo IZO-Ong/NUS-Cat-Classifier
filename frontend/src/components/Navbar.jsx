@@ -5,7 +5,6 @@ export default function Navbar({ username, setUsername }) {
   const { setPrediction, setImagePreview } = useCat()
   const navigate = useNavigate()
 
-
   const handleLogout = () => {
   localStorage.clear()
   sessionStorage.clear()
@@ -16,7 +15,6 @@ export default function Navbar({ username, setUsername }) {
 
   navigate('/')
   }
-
 
   return (
     <nav className="top-nav" style={{ justifyContent: 'space-between', padding: '1rem 2rem' }}>

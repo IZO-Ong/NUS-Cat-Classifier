@@ -20,6 +20,8 @@ export default function Home() {
   const [pendingFile, setPendingFile] = useState(null)
   const [fadeReady, setFadeReady] = useState(false)
 
+  const API_BASE = import.meta.env.VITE_API_URL || ''
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setFadeReady(true)
@@ -35,7 +37,7 @@ export default function Home() {
     formData.append('image', pendingFile)
 
     try {
-      const res = await fetch('http://localhost:5000/predict', {
+      const res = await fetch(`${API_BASE}/api/predict`, {
         method: 'POST',
         body: formData
       })

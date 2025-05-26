@@ -7,7 +7,7 @@ export default function UploadForm({ imagePreview, setImagePreview, setPredictio
   const handleSelect = (file) => {
     const reader = new FileReader()
     reader.onloadend = () => {
-      setImagePreview(reader.result)  // base64 string
+      setImagePreview(reader.result)
       setPendingFile(file)
       setPrediction(null)
     }

@@ -11,10 +11,12 @@ export default function Cats() {
   const { lastPredictedCat } = useCat()
   const [searchQuery, setSearchQuery] = useState('')
 
+  const API_BASE = import.meta.env.VITE_API_URL || ''
+
   const { data: cats = [], isLoading, isError } = useQuery({
     queryKey: ['cats'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:5000/api/cats')
+      const res = await fetch(`${API_BASE}/api/cats`)
       if (!res.ok) throw new Error('Failed to fetch cats')
       return res.json()
     },
@@ -66,7 +68,7 @@ export default function Cats() {
           <h2 className="heading">Recently Predicted</h2>
           <Link to={`/cats/${lastPredictedCat.slug}`} className="recent-predicted">
             <img
-              src={`http://localhost:5000/static/cats/${lastPredictedCat.slug}.png`}
+              src={`${API_BASE}/static/cats/${lastPredictedCat.slug}.png`}
               alt={lastPredictedCat.name}
             />
             <div className="overlay">{lastPredictedCat.name}</div>
