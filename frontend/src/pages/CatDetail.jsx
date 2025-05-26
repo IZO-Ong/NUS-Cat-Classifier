@@ -89,6 +89,8 @@ export default function CatDetail() {
           onLike={(id) => likeComment.mutate(id)}
           sortOption={sortOption}
           setSortOption={setSortOption}
+          slug={slug}
+          refetchComments={refetchComments}
         />
       </div>
     </div>

@@ -60,3 +60,7 @@
     transform: translateY(0);
   }
 }
+
+.password-strength.weak { color: #dc2626 }
+.password-strength.medium { color: #f59e0b }
+.password-strength.strong { color: #16a34a }

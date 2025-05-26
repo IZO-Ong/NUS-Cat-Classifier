@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PasswordField from './PasswordField'
 
 export default function LoginForm({ setUsername }) {
   const [username, setLocalUsername] = useState('')
@@ -7,6 +8,11 @@ export default function LoginForm({ setUsername }) {
   const [rememberMe, setRememberMe] = useState(false)
   const [error, setError] = useState(null)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('username') || sessionStorage.getItem('username')
+    if (loggedIn) navigate('/')
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -16,23 +22,21 @@ export default function LoginForm({ setUsername }) {
       const res = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: username, password })
+        body: JSON.stringify({ username, password })
       })
 
       const data = await res.json()
-
       if (!res.ok) {
         setError(data.error || 'Login failed')
       } else {
         const storage = rememberMe ? localStorage : sessionStorage
         storage.setItem('token', data.token)
         storage.setItem('username', username)
-
-        setUsername(username) // This updates app-level state!
+        storage.setItem('userID', data.userID)
+        setUsername(username)
         navigate('/')
       }
-
-    } catch (err) {
+    } catch {
       setError('Network error. Please try again later.')
     }
   }
@@ -46,13 +50,17 @@ export default function LoginForm({ setUsername }) {
         onChange={(e) => setLocalUsername(e.target.value)}
         required
       />
-      <input
-        type="password"
-        placeholder="Password"
+
+      <PasswordField
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
         required
+        onKeyDown={(e) => {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') handleSubmit(e)
+        }}
       />
+
       <label style={{ fontSize: '0.9rem' }}>
         <input
           type="checkbox"
@@ -62,6 +70,7 @@ export default function LoginForm({ setUsername }) {
         />
         Remember me
       </label>
+
       <button type="submit">Login</button>
 
       {error && (

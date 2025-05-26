@@ -93,7 +93,26 @@ def delete_comment(comment_id):
     comments_collection.delete_one({"_id": ObjectId(comment_id)})
 
     cats_collection.update_many(
-        {}, {"$pull": {"comments": comment_id}}  # Optional: remove from cat docs
+        {}, {"$pull": {"comments": comment_id}}
     )
 
     return jsonify({"message": "Comment deleted"})
+
+@comment_routes.route('/api/cats/<slug>/comments', methods=['GET'])
+def get_comments(slug):
+    comments_cursor = comments_collection.find({"catSlug": slug})
+    comments = []
+
+    for comment in comments_cursor:
+        user = users_collection.find_one({"_id": ObjectId(comment["userID"])})
+        comments.append({
+            "_id": str(comment["_id"]),
+            "content": comment["content"],
+            "timestamp": comment["timestamp"],
+            "likes": [str(uid) for uid in comment.get("likes", [])],
+            "username": user["username"] if user else "Unknown",
+            "userID": str(comment["userID"])
+        })
+
+    return jsonify(comments)
+

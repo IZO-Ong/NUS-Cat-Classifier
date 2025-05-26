@@ -26,7 +26,12 @@ def login():
         return jsonify({"error": "Invalid credentials"}), 401
 
     token = generate_token(user["_id"])
-    return jsonify({"message": "Login successful", "token": token})
+    return jsonify({
+        "message": "Login successful",
+        "token": token,
+        "userID": str(user["_id"]),
+        "username": user["username"]
+    })
 
 @user_routes.route('/api/users', methods=['GET'])
 def get_all_users():

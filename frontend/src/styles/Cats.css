@@ -16,6 +16,12 @@
   border: 2px solid white;
 }
 
+.cat-card.graduated,
+.recent-predicted.graduated {
+  border-color: #fbbf24;
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
 .cat-card img, .recent-predicted img {
   display: block;
   width: 100%;
@@ -86,7 +92,6 @@
   border-radius: 1rem;
   color: white;
 }
-
 
 .location-group h3 {
   font-size: 2rem;
