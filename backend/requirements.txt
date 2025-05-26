@@ -5,3 +5,5 @@ torchvision
 pillow
 pymongo
 pyJWT
+python-dotenv
+gunicorn
