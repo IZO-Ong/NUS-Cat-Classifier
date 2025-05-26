@@ -7,7 +7,6 @@ from torch.utils.data import DataLoader, Dataset
 from torchvision import models, transforms
 from PIL import Image
 
-# ---- Custom Dataset ----
 class H5ImageDataset(Dataset):
     def __init__(self, images, labels, transform=None):
         self.images = images
@@ -24,7 +23,7 @@ class H5ImageDataset(Dataset):
             img = self.transform(img)
         return img, self.labels[idx]
 
-# ---- Load H5 Data ----
+# Load H5 Data
 def load_data():
     with h5py.File("Images/CatsNoCats/train.h5", "r") as f:
         train_x = np.array(f["train_set_x"][:]) / 255.0
@@ -34,7 +33,7 @@ def load_data():
         test_y = np.array(f["test_set_y"][:]).reshape(-1)
     return train_x, train_y, test_x, test_y
 
-# ---- Main Training ----
+# Training
 def main():
     train_x, train_y, test_x, test_y = load_data()
 
@@ -57,7 +56,6 @@ def main():
     train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=32)
 
-    # ---- Load Pretrained Model ----
     model = models.resnet18(pretrained=True)
     model.fc = nn.Linear(model.fc.in_features, 2)  # binary classification
     model = model.train()
@@ -80,7 +78,7 @@ def main():
         scheduler.step()
         print(f"Epoch {epoch+1} - Loss: {running_loss:.4f}")
 
-    # ---- Evaluate ----
+    # Evaluate
     model.eval()
     correct = total = 0
     with torch.no_grad():
@@ -91,7 +89,6 @@ def main():
             correct += (predicted == labels).sum().item()
     print(f"Final Test Accuracy: {100 * correct / total:.2f}%")
 
-    # Save model
     torch.save(model.state_dict(), "cat_resnet_classifier.pt")
 
 if __name__ == "__main__":

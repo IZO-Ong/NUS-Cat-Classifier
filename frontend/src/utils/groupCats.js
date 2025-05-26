@@ -2,7 +2,7 @@ export function groupCatsByLocation(cats) {
   return cats.reduce((acc, cat) => {
     const loc = cat.location.toLowerCase()
     const group = loc.includes('utown') ? 'UTown' :
-                  loc.includes('engineering') ? 'Engineering' :
+                  loc.includes('engineering') || loc.includes('e1') || loc.includes('ew2') || loc.includes('ea') ? 'Engineering' :
                   loc.includes('computing') || loc.includes('biz') ? 'Computing / Biz' :
                   loc.includes('science') ? 'Science' :
                   loc.includes('arts') || loc.includes('fass') ? 'Arts' :

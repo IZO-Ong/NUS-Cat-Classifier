@@ -1,53 +1,100 @@
-# 🐱 Cat Classifier Web App
+# 🐾 NUS Cat Classifier
 
-A sleek, modern web application that classifies cat images using a machine learning backend. Built with React and React-Bootstrap, this app features a minimalist interface and smooth UX.
+Welcome to the **NUS Cat Classifier**, a full-stack web application designed to identify and classify the iconic campus cats of the National University of Singapore (NUS). Users can upload images, receive instant predictions, and explore detailed profiles of these beloved felines.
 
-## Features
+🔗 **Live Demo:** [https://nus-cat-classifier.onrender.com](https://nus-cat-classifier.onrender.com)  
+*Note: As this app runs on Render's free tier, the initial load and image prediction may take up to a minute.*
 
-- Drag and drop or browse to upload cat images
-- Predictions powered by a Flask + PyTorch backend
-- Prediction result and image are persisted across page refresh
-- Responsive and modern Apple-inspired UI
-- Dynamic file labeling: “Upload another image” if an image exists
-- Route navigation between Home (`/`) and Cats (`/cats`) pages
+![App Preview](./assets/preview-home.png)
 
-## Tech Stack
+---
 
-- **Frontend**: React, React Router DOM, React-Bootstrap
-- **Styling**: Custom CSS with modern glassmorphism, utility-first spacing
-- **Backend**: Flask (runs independently)
-- **ML Model**: PyTorch-based CNN (e.g. ResNet18 or similar)
+## ⚙️ Tech Stack
 
-## Getting Started
+- **Frontend:** React, React Router, React Bootstrap
+- **Backend:** Flask, MongoDB Atlas
+- **Machine Learning:** PyTorch
+- **Deployment:** Render (frontend and backend)
 
-### Prerequisites
+---
 
-- **Node.js** (v16 or later)
-- **Python** (3.8+) with Flask backend running at `http://localhost:5000` and exposing a `/predict` endpoint
+## 🧠 Machine Learning Pipeline
 
-### Frontend Setup
+This application uses a **two-stage model architecture** to provide accurate image classification:
 
-```bash
-git clone https://github.com/your-username/cat-classifier-frontend.git
-cd cat-classifier-frontend
-npm install
-npm run dev
-```
+### 1. Cat Detection Model
 
-### Backend (Flask) Setup
+A convolutional neural network (CNN) trained to determine whether the uploaded image contains a cat or not. This acts as a filter to prevent invalid or unrelated submissions from proceeding.
 
-```bash
-cd cat-classifier-backend
-pip install -r requirements.txt
-python app.py
-```
+### 2. Cat Identification Model
 
-Ensure the `/predict` endpoint accepts image uploads and returns:
+If the image is deemed to contain a cat, it is passed through a second CNN which identifies **which NUS cat** it resembles most closely. This multi-class classifier is trained on labelled images of various known NUS cats.
 
-```json
-{ "prediction": "toothless" }
-```
+> 🧪 Model training was inspired by Andrew Ng’s “Introduction to Neural Networks” on [Coursera](https://www.coursera.org/learn/neural-networks-deep-learning).  
+> 🖼️ Cat images used in classification were collected from and attributed to **[NUScatcafe](https://www.instagram.com/nuscatcafe/)**.
 
-## License
+## 🌐 Website Structure and Features
 
-MIT
+### 🏠 Home Page (`/`)
+
+![Home Page](./assets/screenshot-home.png)
+
+- Simple and modern interface for image upload
+- Live preview of selected image
+- 'Predict' button triggers backend inference
+- Responsive loading indicator
+- Classification results shown clearly below the image
+
+### 😺 Cats Page (`/cats`)
+
+![Cats Page](./assets/screenshot-cats.png)
+
+- View a comprehensive list of all NUS cats
+- Grouped by **location**, e.g.:
+  - UTown
+  - Engineering
+  - Arts
+  - Science
+- Use the **search bar** to filter by name
+- Most recently predicted cat will be displayed at the top
+
+### 📄 Cat Detail Page (`/cats/:slug`)
+
+![Cat Detail Page](./assets/screenshot-detail.png)
+
+- Deep dive into each cat’s background
+- Information shown includes:
+  - Full name
+  - Specific location
+  - Likes and dislikes
+  - Community comments
+  - Prediction statistics
+- Allows users to contribute **comments** with timestamps
+- Like/unlike and delete options for logged-in users
+
+### 🔐 Login / Signup Page (`/login`, `/signup`)
+
+![Login Page](./assets/screenshot-login.png)
+
+![Signup Page](./assets/screenshot-signup.png)
+
+- Secure authentication flow with token-based login
+- Signup form includes:
+  - Password strength indicator
+  - Password visibility toggle
+  - Real-time username availability check
+- Comments and likes are restricted to logged-in users
+- Automatic redirect to home after successful login
+
+---
+
+## 📝 About
+
+This project was created with love for NUS and its iconic cats. Whether you’re a student, alumni or visitor, you can explore and contribute to a living archive of the university’s feline residents.
+
+---
+
+## 📜 Licence
+
+MIT Licence © 2025 Isaac Ong  
+Images and data collected for educational purposes.

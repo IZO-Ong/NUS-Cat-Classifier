@@ -20,26 +20,26 @@ raw_cats = [
     },
     {
         "name": "Putu",
-        "location": "UTown",
+        "location": "UTown / Tembusu / NUSC",
         "likes": ["Eating", "Being on the ground", "Meowing"],
         "sex": "Male"
     },
     {
         "name": "Toothless",
-        "location": "Engineering",
+        "location": "EW2 / E4A / E6",
         "likes": ["Neck scratches", "Bird watching"],
         "sex": "Male"
     },
     {
         "name": "Fred",
-        "location": "Engineering",
+        "location": "EA / E1 / E1A",
         "likes": ["Meowing loudly", "Grass running"],
         "sex": "Male",
         "graduated": True
     },
     {
         "name": "Kit",
-        "location": "Engineering",
+        "location": "E1 / EW1",
         "likes": ["Polite food begging", "Quiet hideouts"],
         "sex": "Female"
     },
@@ -70,7 +70,7 @@ raw_cats = [
     },
     {
         "name": "Coco",
-        "location": "Science",
+        "location": "Science / RVRC",
         "likes": ["Freedom", "Trash digging"],
         "sex": "Male"
     },

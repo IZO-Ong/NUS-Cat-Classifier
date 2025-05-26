@@ -93,7 +93,6 @@ def evaluate_model(loader):
             total += labels.size(0)
     return 100 * correct / total
 
-# Training loop with early stopping and checkpointing
 def train_model():
     best_val_acc = 0
     patience = 5
