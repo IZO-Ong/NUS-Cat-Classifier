@@ -97,11 +97,9 @@ If the image is deemed to contain a cat, it is passed through a second CNN which
 
 ## About
 
-This project was created with love for NUS and its iconic cats. Whether you’re a student, alumni or visitor, you can explore and contribute to a living archive of the university’s feline residents.
+This project was created with love for NUS and its iconic cats.
 
 ---
 
 ## Licence
-
-MIT Licence © 2025 Isaac Ong  
-Images and data collected for educational purposes.
+See [LICENSE](LICENSE).
