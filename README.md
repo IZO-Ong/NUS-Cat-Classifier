@@ -4,7 +4,6 @@ Welcome to **NUS Cat Classifier**, a full-stack web application designed to iden
 
 <p align="center">
   <a href="https://nus-cat-classifier.onrender.com">Live Demo</a> •
-  <a href="LICENSE">MIT License</a>
 </p>
 
 <p align="center">
