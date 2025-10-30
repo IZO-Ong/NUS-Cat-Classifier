@@ -3,7 +3,7 @@
 Welcome to **NUS Cat Classifier**, a full-stack web application designed to identify and classify the iconic campus cats of the National University of Singapore (NUS). Users can upload images, receive instant predictions, and explore detailed profiles of these beloved felines.
 
 <p align="center">
-  <a href="https://nus-cat-classifier.onrender.com">Live Demo</a> •
+  <a href="https://nus-cat-classifier.onrender.com">Live Demo</a>
 </p>
 
 <p align="center">
