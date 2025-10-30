@@ -15,7 +15,7 @@ LEARNING_RATE = 0.001
 IMAGE_SIZE = 224
 VAL_SPLIT = 0.15
 TEST_SPLIT = 0.15
-SEED = 42
+SEED = 100
 MODEL_PATH = "nus_cat_classifier.pt"
 
 
@@ -79,7 +79,7 @@ criterion = nn.CrossEntropyLoss(weight=class_weights)
 optimizer = optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=LEARNING_RATE)
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.1, patience=3)
 
-# Evaluation function
+# eval func
 def evaluate_model(loader):
     model.eval()
     correct = 0

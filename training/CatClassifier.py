@@ -23,7 +23,7 @@ class H5ImageDataset(Dataset):
             img = self.transform(img)
         return img, self.labels[idx]
 
-# Load H5 Data
+# load data
 def load_data():
     with h5py.File("Images/CatsNoCats/train.h5", "r") as f:
         train_x = np.array(f["train_set_x"][:]) / 255.0
@@ -33,7 +33,7 @@ def load_data():
         test_y = np.array(f["test_set_y"][:]).reshape(-1)
     return train_x, train_y, test_x, test_y
 
-# Training
+# training
 def main():
     train_x, train_y, test_x, test_y = load_data()
 
